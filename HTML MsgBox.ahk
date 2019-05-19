@@ -23,13 +23,15 @@ m.AddButton("Button",{InnerHTML:"<u>R</u>ound Edges",ID:"Edges"})
 m.AddButton("Button",{InnerHTML:"<u>P</u>retty Title",ID:"Pretty"})
 m.AddButton("Button",{InnerHTML:"<u>S</u>how Me Something Cool",ID:"Cool"})
 m.AddButton("Button",{InnerHTML:"<u>M</u>ake A Sound",ID:"Sound"})
+m.AddButton("Button",{InnerHTML:"My Actual Response",ID:"What I Asked For :)"})
 m.Update("Close",{Position:"Relative","Z-Index":4})
 m.Update("Button",{"Z-Index":2,Display:"Relative"})
-m.Doc.GetElementById("Content").InnerHTML:="<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect"
+Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect")
 /*
 	m.Update("Content",{"Font-Size":"100pt"})
 */
-Gui,Show,h400
+MsgBox,%Response%
+ExitApp
 Class MsgBoxClass{
 	Keep:=[]
 	__New(Win:="MsgBox"){
@@ -77,6 +79,8 @@ Class MsgBoxClass{
 			Gui,% this.Win ":Hide"
 		}else if(IsFunc(Function:=Node.ID))
 			%Function%(this)
+		else
+			this.Response:=Node.ID
 	}AddButton(Type,Values:=""){
 		New:=this.CreateElement(Type,,,this.Doc.GetElementById("Footer"))
 		for a,b in Values
@@ -87,6 +91,12 @@ Class MsgBoxClass{
 		for a,b in Attributes
 			New.SetAttribute(a,b)
 		return New
+	}Display(Text){
+		this.Get("Content").InnerHTML:=Text
+		Gui,% this.Win ":Show",h400
+		while(!this.Response)
+			Sleep,100
+		return this.Response
 	}Escape(){
 		Gui,% MsgBoxClass.Keep[this].Win ":Hide"
 	}FixIE(Version=0){
@@ -102,10 +112,12 @@ Class MsgBoxClass{
 		else
 			RegWrite,REG_DWORD,HKCU,%Key%,%ExeName%,%Version%
 		return PreviousValue
+	}Get(Control){
+		return this.Doc.GetElementById(Control)
 	}Img(Text:="",ImageLocation:="",Width:="",Height:="",FontSize:=""){
 		(Element:=this.Doc.GetElementById("Img")).SRC:=ImageLocation
-			Element.Style.Width:=Width
-			Element.Style.Height:=Height
+		Element.Style.Width:=Width
+		Element.Style.Height:=Height
 		(Element:=this.Doc.GetElementById("Icon")).InnerHTML:=Text
 		if(FontSize)
 			Element.Style.FontSize:=FontSize "px"
