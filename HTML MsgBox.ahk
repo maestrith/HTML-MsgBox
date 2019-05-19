@@ -206,78 +206,7 @@ Edges(this){
 	All:=this.Doc.GetElementsByTagName("Button")
 	while(aa:=All.Item[A_Index-1])
 		this.Update(aa.ID,{"Border-Radius":"20px"})
-	m(Clipboard:=this.Body.OuterHtml)
 }
 Why(this){
 	MsgBox,Because I can :)
-}
-m(x*){
-	static List:={BTN:{OC:1,ARI:2,YNC:3,YN:4,RC:5,CTC:6},ico:{X:16,"?":32,"!":48,I:64}},Msg:=[],xx,y,w,h,XPos:=Round(A_ScreenWidth*.7825),Center:=0,TT
-	static Title
-	List.Title:="Right Click Menu+",List.Def:=0,List.Time:=0,Value:=0,TXT:="",Bottom:=0
-	WinGetTitle,Title,A
-	for a,b in x
-		Obj:=StrSplit(b,":"),(Obj.1="Bottom"?(Bottom:=1):""),(VV:=List[Obj.1,Obj.2])?(Value+=VV):(List[Obj.1]!="")?(List[Obj.1]:=Obj.2):TXT.=(b.XML?b.XML:IsObject(b)?Obj2String(b,,Bottom):b) "`n"
-	Msg:={option:Value+262144+(List.Def?(List.Def-1)*256:0),Title:List.Title,Time:List.Time,TXT:TXT}
-	Sleep,120
-	MsgBox,% Msg.option,% Msg.Title,% Msg.TXT,% Msg.Time
-	for a,b in {OK:Value?"OK":"",Yes:"YES",No:"NO",Cancel:"CANCEL",Retry:"RETRY"}
-		IfMsgBox,%a%
-			return b
-	return
-}
-/*
-Obj2String(Obj,FullPath:="Blank",BottomBlank:=0){
-	static String,Blank
-	if(FullPath="Blank")
-		FullPath:=String:=FullPath:=Blank:=""
-	if(IsObject(Obj)){
-		Try
-			if(Obj.XML){
-				if(Obj.XML.XML){
-					Obj.Transform()
-					return String.=FullPath "XML Object:`n" Obj[]
-				}return String.=(FullPath?FullPath ".":"") Obj.XML "`n"
-			}
-		Try
-			if(Obj.OuterHtml)
-				return String.=FullPath "." Obj.OuterHtml "`n"
-		Try
-			for a,b in Obj{
-				if(IsObject(b))
-					Obj2String(b,FullPath "." a,BottomBlank)
-				else{
-					if(BottomBlank=0){
-						String.=(FullPath?FullPath ".":"") a " = " b "`n"
-					}else if(b!=""){
-						String.=(FullPath?FullPath ".":"") "." a " = " b "`n"
-					}else
-						Blank.=(FullPath?FullPath ".":"") "." a " =`n"
-				}
-			}
-		Catch
-			String.=FullPath ".Unknown Object Type`n"
-	}return Trim(String Blank,"`n")
-}
-*/
-
-
-Obj2String(Obj,FullPath:=1,BottomBlank:=0){
-	static String,Blank
-	if(FullPath=1)
-		String:=FullPath:=Blank:=""
-	if(IsObject(Obj)){
-		for a,b in Obj{
-			if(IsObject(b)&&!b.XML)
-				Obj2String(b,FullPath "." a,BottomBlank)
-			else{
-				if(BottomBlank=0)
-					String.=FullPath "." a " = " (b.XML?b.XML:b) "`n"
-				else if(b!="")
-					String.=FullPath "." a " = " (b.XML?b.XML:b) "`n"
-				else
-					Blank.=FullPath "." a " =`n"
-			}
-	}}
-	return String Blank
 }
