@@ -203,9 +203,12 @@ Edges(this){
 	for a,b in ["Close","Why","Title","ContentDiv"]
 		this.Update(b,{"Border-Radius":"20px"})
 	this.Update("ContentDiv",{Padding:"10px",Border:"2px Solid Grey"})
-	All:=this.Doc.GetElementsByTagName("Button")
-	while(aa:=All.Item[A_Index-1])
-		this.Update(aa.ID,{"Border-Radius":"20px"})
+	this.Update("Button",{"Border-Radius":"20px"},1)
+	/*
+		All:=this.Doc.GetElementsByTagName("Button")
+		while(aa:=All.Item[A_Index-1])
+			this.Update(aa.ID,{"Border-Radius":"20px"})
+	*/
 }
 Why(this){
 	MsgBox,Because I can :)
