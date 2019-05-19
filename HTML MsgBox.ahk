@@ -16,16 +16,19 @@ m.Update("Content",{Color:"Pink"})
 m.Update("Footer",{Bottom:"0px",Position:"Absolute",Display:"Flex",Height:"40px"})
 m.Update("Header",{Position:"Absolute",Top:"0px",Left:"0px",Right:"0px"})
 m.Update("HTML Body",{"background-color":"black"},1)
-m.Update("ContentDiv",{Position:"Absolute",Top:"22px",Bottom:"40px",Right:0,Left:0})
-m.Update("Title",{"Z-Index":1,"Line-Height":"15px","Height":"18px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:CheckReg,Border:"2px Solid","Border-Color":CheckReg})
+m.Update("ContentDiv",{Position:"Absolute",Display:"Flex",Top:"22px",Bottom:"40px",Right:0,Left:0})
+m.Update("Title",{"Z-Index":1,"Line-Height":"15px","Height":"18px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Border:"2px Solid",Background:CheckReg,"Border-Color":CheckReg})
 m.AddButton("Button",{InnerHTML:"<u>D</u>rop Shadows",ID:"Drop"})
 m.AddButton("Button",{InnerHTML:"<u>R</u>ound Edges",ID:"Edges"})
+m.AddButton("Button",{InnerHTML:"<u>P</u>retty Title",ID:"Pretty"})
 m.AddButton("Button",{InnerHTML:"<u>S</u>how Me Something Cool",ID:"Cool"})
 m.AddButton("Button",{InnerHTML:"<u>M</u>ake A Sound",ID:"Sound"})
 m.Update("Close",{Position:"Relative","Z-Index":4})
 m.Update("Button",{"Z-Index":2,Display:"Relative"})
-m.Doc.GetElementById("Content").InnerHTML:="Hell<i>o</i><br><br><br><br>There"
-m.Update("Content",{"Font-Size":"200pt"})
+m.Doc.GetElementById("Content").InnerHTML:="<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect"
+/*
+	m.Update("Content",{"Font-Size":"100pt"})
+*/
 Gui,Show,h400
 Class MsgBoxClass{
 	Keep:=[]
@@ -35,11 +38,13 @@ Class MsgBoxClass{
 		Gui,%Win%:Default
 		Gui,%Win%:-Resize +HWNDMain -Caption +LabelMsgBoxClass.
 		Gui,Margin,0,0
+		Ver:=this.FixIE(11)
 		Gui,Add,ActiveX,w800 h400 vwb HWNDIE,mshtml
+		this.FixIE(Ver)
 		wb.Navigate("about:blank")
 		while(wb.ReadyState!=4)
 			Sleep,100
-		this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,wb.Navigate("about:<Body><div ID='Header'><div ID='Close' unselectable='on'>X</div><div ID='Title' unselectable='on'>" A_ScriptName "</div></div><div ID='ContentDiv'><p ID='Icon' Style='Float:Left;Color:Orange;Font-Size:84px'></p><div ID='Content'></div></div><div ID='Footer'></div><Styles ID='Styles'></Styles></Body>")
+		this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,wb.Navigate("about:<Body><div ID='Header'><div ID='Close' unselectable='on'>X</div><div ID='Title' unselectable='on'>" A_ScriptName "</div></div><div ID='ContentDiv'><div ID='Image' Style='Display:Flex;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></div><div ID='Content'></div></div><div ID='Footer'></div><Styles ID='Styles'></Styles></Body>")
 		while(wb.ReadyState!=4)
 			Sleep,10
 		this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}")
@@ -84,6 +89,26 @@ Class MsgBoxClass{
 		return New
 	}Escape(){
 		Gui,% MsgBoxClass.Keep[this].Win ":Hide"
+	}FixIE(Version=0){
+		static Key:="Software\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION",Versions:={7:7000,8:8888,9:9999,10:10001,11:11001}
+		Version:=Versions[Version]?Versions[Version]:Version
+		if(A_IsCompiled)
+			ExeName:=A_ScriptName
+		else
+			SplitPath,A_AhkPath,ExeName
+		RegRead,PreviousValue,HKCU,%Key%,%ExeName%
+		if(!Version)
+			RegDelete,HKCU,%Key%,%ExeName%
+		else
+			RegWrite,REG_DWORD,HKCU,%Key%,%ExeName%,%Version%
+		return PreviousValue
+	}Img(Text:="",ImageLocation:="",Width:="",Height:="",FontSize:=""){
+		(Element:=this.Doc.GetElementById("Img")).SRC:=ImageLocation
+			Element.Style.Width:=Width
+			Element.Style.Height:=Height
+		(Element:=this.Doc.GetElementById("Icon")).InnerHTML:=Text
+		if(FontSize)
+			Element.Style.FontSize:=FontSize "px"
 	}Shadow(OffSetX:=4,OffSetY:=4,Color:="444"){
 		All:=this.Doc.GetElementsByTagName("Div")
 		while(aa:=All.Item[A_Index-1]){
@@ -133,25 +158,32 @@ Sound(){
 	return
 }
 Drop(this){
-	return this.Shadow(9,9)
+	return this.Shadow(4,5)
+}
+Stop(this){
+	this.Img()
+	Button:=this.Doc.GetElementById("Stop")
+	Button.InnerText:="Cool Again"
+	Button.ID:="Cool"
+	SetTimer,HTMLCool,Off
 }
 Cool(this){
-	static Object
+	static Object,Colors:=["Red","Purple","Green"],Index:=1,Node
 	Object:=this
-	SetTimer,HTMLCool,-1
+	(Node:=Object.Doc.GetElementById("Icon"))
+	Button:=Object.Doc.GetElementById("Cool")
+	Button.InnerText:="Make It Stop!"
+	Button.ID:="Stop"
+	this.Img("&#x2622;   Neahhhhhh","https://cdn68.picsart.com/191507689000201.gif",250,,40)
+	SetTimer,HTMLCool,500
 	return
 	HTMLCool:
-	(Node:=Object.Doc.GetElementById("Icon"))
-	List:=[{Msg:"&#x2614;<br><font size='5px'>Rain Soon!",Colors:["Brown","Green","Blue"]},{Msg:"&#x2622<br><font size='5px'>RUN!",Colors:["Red","Yellow"]},{Msg:"&#x2764<br><font size='5px'>Hearts!",Colors:["Red","Purple","Green"]}]
-	Node.Style.TextAlign:="Center"
-	for a,b in List{
-		Node.InnerHtml:=b.Msg
-		Loop,4
-			for c,d in b.Colors{
-				Node.Style.Color:=d
-				Sleep,500
-	}}
+	Node.Style.Color:=Colors[Mod(++Index,Colors.MaxIndex())+1]
+	Object.Update("Stop",{Background:Colors[Mod(Index,Colors.MaxIndex())+1]})
 	return
+}
+Pretty(this){
+	this.Update("Title",{Background:"Linear-Gradient(90deg, #000 0%, #444 15%,#ff0000 50%, #fff 100%)",Border:"",Height:"22px","Line-Height":"22px"})
 }
 Edges(this){
 	for a,b in ["Close","Why","Title","ContentDiv"]
