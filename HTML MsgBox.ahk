@@ -1,36 +1,41 @@
 #SingleInstance,Force
-global CSS,wb
-RegRead,CheckReg,HKCU\SOFTWARE\Microsoft\Windows\DWM,ColorizationColor
-Setformat,Integer,Hex
-CheckReg:=CheckReg+0
-StringRight,CheckReg,CheckReg,6
-SetFormat,Integer,Dec
-CheckReg:=CheckReg?CheckReg:"AAAAAA"
+global CSS,wb,v:=[]
 m:=New MsgBoxClass()
-m.Update("Close",{"Z-Index":3,Border:"2px Solid " CheckReg,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"18px","Line-Height":"18px",Background:CheckReg})
-m.Doc.GetElementById("Header").InsertBefore(m.CreateElement("Div","Why","Y",,{UnSelectable:"On"}),m.Doc.GetElementById("Title"))
-m.Update("Why",{"Z-Index":2,Position:"Relative",Border:"2px Solid " CheckReg,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"18px","Line-Height":"18px",Background:CheckReg,InnerText:"Y"})
+m.Update("Close")
+m.Doc.GetElementById("Header").InsertBefore(m.CreateElement("Div","Save-Position","S",,{Class:"tooltip",UnSelectable:"On"}),m.Doc.GetElementById("Title"))
+m.Update("Save-Position")
+m.CreateElement("Span","ToolTip","Save The MsgBox Position",m.Get("Save-Position"),{Class:"tooltiptext"},{Border:"2px Solid Grey"})
 m.Update("Close:Hover",{Background:"Red","Border-Color":"Red"})
 m.Update("Close:Active",{Background:"Pink"})
-m.Update("Content",{Color:"Pink"})
-m.Update("Footer",{Bottom:"0px",Position:"Absolute",Display:"Flex",Height:"40px"})
+m.Update("Content",{Color:"Pink",Width:"100%"})
+m.Update("Buttons",{Bottom:"0px",Position:"Absolute",Display:"Flex",Height:"40px"})
 m.Update("Header",{Position:"Absolute",Top:"0px",Left:"0px",Right:"0px"})
 m.Update("HTML Body",{"background-color":"black"},1)
-m.Update("ContentDiv",{Position:"Absolute",Display:"Flex",Top:"22px",Bottom:"40px",Right:0,Left:0})
-m.Update("Title",{"Z-Index":1,"Line-Height":"15px","Height":"18px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Border:"2px Solid",Background:CheckReg,"Border-Color":CheckReg})
-m.AddButton("Button",{InnerHTML:"<u>D</u>rop Shadows",ID:"Drop"})
-m.AddButton("Button",{InnerHTML:"<u>R</u>ound Edges",ID:"Edges"})
-m.AddButton("Button",{InnerHTML:"<u>P</u>retty Title",ID:"Pretty"})
-m.AddButton("Button",{InnerHTML:"<u>S</u>how Me Something Cool",ID:"Cool"})
-m.AddButton("Button",{InnerHTML:"<u>M</u>ake A Sound",ID:"Sound"})
-m.AddButton("Button",{InnerHTML:"My Actual Response",ID:"What I Asked For"})
-m.Update("Close",{Position:"Relative","Z-Index":4})
+m.Update("ContentDiv",{Border:"2px Solid Grey",Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0})
+m.Update("Title")
+m.AddButton({InnerHTML:"<u>D</u>rop Shadows",ID:"Drop"})
+m.AddButton({InnerHTML:"<u>R</u>ound Edges",ID:"Edges"})
+m.AddButton({InnerHTML:"<u>P</u>retty Title",ID:"Pretty"})
+m.AddButton({InnerHTML:"<u>S</u>how Me Something Cool",ID:"Cool"})
+m.AddButton({InnerHTML:"<u>M</u>ake A Sound",ID:"Sound"})
+m.AddButton({InnerHTML:"My Actual Response",ID:"What I Asked For"})
 m.Update("Button",{"Z-Index":2,Display:"Relative"})
-Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect")
+m.Update("Img",{Width:"0px"})
+/*
+	Response:=m.Display(RegExReplace(m.Body.OuterHtml,"<","`n<"),1)
+*/
+Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
 MsgBox,%Response%
 ExitApp
+return
+Exit(){
+	ExitApp
+}
 Class MsgBoxClass{
 	Keep:=[]
+	MM(){
+		m(Clipboard:=RegExReplace(this.Body.OuterHtml,"<","`n<"))
+	}
 	__New(Win:="MsgBox"){
 		static
 		Gui,%Win%:Destroy
@@ -39,16 +44,39 @@ Class MsgBoxClass{
 		Gui,Margin,0,0
 		Ver:=this.FixIE(11)
 		Gui,Add,ActiveX,w800 h400 vwb HWNDIE,mshtml
+		this.Main:=Main
 		this.FixIE(Ver)
 		wb.Navigate("about:blank")
 		while(wb.ReadyState!=4)
 			Sleep,100
-		this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,wb.Navigate("about:<Body><div ID='Header'><div ID='Close' unselectable='on'>X</div><div ID='Title' unselectable='on'>" A_ScriptName "</div></div><div ID='ContentDiv'><div ID='Image' Style='Display:Flex;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></div><div ID='Content'></div></div><div ID='Footer'></div><Styles ID='Styles'></Styles></Body>")
+		this.Doc:=wb.Document
+		MsgBoxClass.Keep[Main]:=this
+		wb.Navigate("about:<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' unselectable='on'>X</Div><Div ID='Title' unselectable='on'>" A_ScriptName "</Div></Div><Div ID='ContentDiv'><Div ID='Image' Style='Display:Flex;Width-0px;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>")
 		while(wb.ReadyState!=4)
 			Sleep,10
+		SysGet,Border,33
+		SysGet,Edge,45
+		this.Border:=Border
+		this.Edge:=Edge
+		this.Update(".tooltip",{Position:"Relative",Display:"Inline-Block"},1)
+		this.Update(".tooltip .tooltiptext",{Width:"120px","Background-Color":"Black",Color:"#FFF","Text-Align":"Center","Border-Radius":"6px",Padding:"5px",Position:"Absolute","Z-Index":"8",Top:"10px",Right:"105%",Visibility:"Hidden"},1)
+		this.Update(".tooltip:hover .tooltiptext",{Visibility:"Visible"},1)
 		this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}")
+		RegRead,CheckReg,HKCU\SOFTWARE\Microsoft\Windows\DWM,ColorizationColor
+		Color:=SubStr(Format("{:x}",CheckReg+0),-5)
+		this.Color:=Color?Color:"AAAAAA"
+		this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"}
+					,Header:{Position:"Absolute",Left:0,Right:0,Top:0}
+					,Content:{OverFlow:"Auto",Height:"100%"}
+					,"Save-Position":{"Z-Index":2,Position:"Relative",Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color}
+					,Close:{"Z-Index":4,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color,Position:"Relative"}
+					,Title:{"Z-Index":1,"Line-Height":"20px","Height":"20px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:this.Color}}
+		/*
+			this.Update("ContentDiv",{Border:"2px solid grey"})
+		*/
 		return this
 	}_Event(Name,Event){
+		local
 		Node:=Event.srcElement
 		if(Name="MouseDown"){
 			if(Node.ID="Title"){
@@ -71,33 +99,94 @@ Class MsgBoxClass{
 				return
 			}
 			return
+		}else if(Node.ID="Save-Position"){
+			this.Get("OverAll").Style.Visibility:="Hidden"
+			Form:=this.Get("WinForm")
+			this.Get("WinForm").Style.Visibility:="Visible"
+			if(!this.Get("Window-Title")){
+				this.CreateElement("Div","","Move and Resize this window where you want it",Form)
+				this.CreateElement("Div","","It will return here when the below window is Active",Form)
+				this.CreateElement("Div","","Window Title:",Form)
+				this.CreateElement("Input","Window-Title","",Form)
+				this.CreateElement("Div","","Window Class:",Form)
+				this.CreateElement("Input","Window-Class","",Form)
+				this.CreateElement("Div","","Window EXE:",Form)
+				this.CreateElement("Input","Window-EXE","",Form)
+				this.CreateElement("Div","","`n",Form)
+				this.CreateElement("Input","Window-Submit","For Above Window",Form,{Type:"Button"})
+				this.CreateElement("Input","Window-Submit-Global","Global",Form,{Type:"Button"})
+				this.Update("Window-Title",{Width:"500px"})
+			}
+			WinGetPos,x,y,w,h,% this.ID
+			Gui,% this.Win ":+Resize +Caption"
+			WinMove,% this.ID,,% x-(this.Border)+this.Edge,,% w+(this.Border*2)-(this.Edge*2)+1,% h+(this.Border)-(this.Edge)+1
+			for a,b in {Title:"Window-Title",Class:"Window-Class",EXE:"Window-EXE"}
+				this.Get(b).Value:=this.WinInfo[a]
+			this.BackgroundColor:=(OO:=this.Elements)["HTML Body","background-color"]
+			this.Color:=OO["HTML Body"].Color
+			this.Update("HTML Body",{"Background-Color":"Black",Color:"Grey"},1)
+		}else if(SubStr(Node.ID,1,13)="Window-Submit"){
+			Title:=this.Get("Window-Title").Value
+			Class:=this.Get("Window-Class").Value
+			EXE:=this.Get("Window-EXE").Value
+			WinGetPos,x,y,w,h,% this.ID
+			Gui,% this.Win ":-Caption -Resize"
+			WinMove,A,,% x+this.Border-this.Edge,,% w-(this.Border*2)+(this.Edge*2)-1,% h-(this.Border)+(this.Edge)-1
+			if(){
+				if(InStr(Node.ID,"Global"))
+					m("GLOBAL!")
+				else
+					m(Title,Class,EXE)
+			}
+			this.Get("OverAll").Style.Visibility:="Visible"
+			Form:=this.Get("WinForm").ParentNode
+			this.Get("WinForm").Style.Visibility:="Hidden"
+			this.Update("HTML Body",{Color:this.Color},1)
+			this.Update("HTML Body",{"Background-Color":this.BackgroundColor},1)
+			return
 		}else if(Node.ID="Close"){
 			ExitApp
 			Gui,% this.Win ":Hide"
 		}else if(IsFunc(Function:=Node.ID))
 			%Function%(this)
-		else
+		else if(Node.NodeName="Button")
 			this.Response:=Node.ID
-	}AddButton(Type,Values:=""){
-		New:=this.CreateElement(Type,,,this.Doc.GetElementById("Footer"))
+	}AddButton(Values:=""){
+		static Buttons:=[]
+		local
+		New:=this.CreateElement("Button",,,this.Doc.GetElementById("Buttons"))
+		Buttons.Push(New)
 		Values.ID:=RegExReplace(Values.ID,"\s","_")
 		for a,b in Values
 			New[a]:=b
+		for a,b in Buttons
+			b.SetAttribute("Style","Z-Index:" A_Index ";Position:Relative;")
 		return New
-	}CreateElement(Type,ID:="",Text:="",Parent:="",Attributes:=""){
+	}CreateElement(Type,ID:="",Text:="",Parent:="",Attributes:="",CSS:=""){
+		local
 		New:=this.Doc.CreateElement(Type),New.ID:=ID,New.InnerText:=Text,Parent?Parent.AppendChild(New):this.Body.AppendChild(New)
 		for a,b in Attributes
 			New.SetAttribute(a,b)
+		if(CSS&&ID)
+			this.Update(ID,CSS)
 		return New
-	}Display(Text){
-		this.Get("Content").InnerHTML:=Text
+	}Display(Text,AsText:=0){
+		local
+		WinGetTitle,Title,A
+		WinGetClass,Class,A
+		WinGet,Process,ProcessName,A
+		this.WinInfo:={Title:Title,Class:Class,EXE:Process}
+		this.Get("Content")[(AsText?"InnerText":"InnerHTML")]:=Text
 		Gui,% this.Win ":Show",h400
 		while(!this.Response)
-			Sleep,100
+			Sleep,200
 		return this.Response
 	}Escape(){
 		Gui,% MsgBoxClass.Keep[this].Win ":Hide"
+		if(IsFunc(Exit:="Exit"))
+			%Exit%()
 	}FixIE(Version=0){
+		local
 		static Key:="Software\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION",Versions:={7:7000,8:8888,9:9999,10:10001,11:11001}
 		Version:=Versions[Version]?Versions[Version]:Version
 		if(A_IsCompiled)
@@ -113,40 +202,42 @@ Class MsgBoxClass{
 	}Get(Control){
 		return this.Doc.GetElementById(Control)
 	}Img(Text:="",ImageLocation:="",Width:="",Height:="",FontSize:=""){
+		local
 		(Element:=this.Doc.GetElementById("Img")).SRC:=ImageLocation
 		Element.Style.Width:=Width
 		Element.Style.Height:=Height
 		(Element:=this.Doc.GetElementById("Icon")).InnerHTML:=Text
 		if(FontSize)
 			Element.Style.FontSize:=FontSize "px"
-	}Shadow(OffSetX:=4,OffSetY:=4,Color:="444"){
-		All:=this.Doc.GetElementsByTagName("Div")
-		while(aa:=All.Item[A_Index-1]){
-			if(aa.ParentNode.ID="Header"){
-				this.Update(aa.ID,{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color})
-				if(aa.ID!="Title"){
-					this.Update(aa.ID ":Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)","Z-Index":1})
-					this.Update(aa.ID ":Hover",{Background:"Pink"})
-				}
+	}Shadow(OffSetX:=4,OffSetY:=4,Color:="444",Controls:="All"){
+		local
+		for a,Control in (Controls="All"?["Header","Buttons","ContentDiv"]:[Controls]){
+			this.Doc.GetElementById(Control)
+			if(Control="Header"){
+				this.Update("Header",{"Margin-Bottom":OffSetY "px","Margin-Right":OffSetX "px"})
+				this.Update("Header > Div",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color})
+				this.Update("ContentDiv",{Top:this.Doc.GetElementById(Control).OffSetHeight+OffSetY "px"})
+				this.Update("Save-Position:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
+				this.Update("Close:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
+			}if(Control="ContentDiv"){
+				this.Update(Control,{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color,"Margin-Right":OffSetX "px"})
+			}if(Control="Buttons"){
+				this.Update("ContentDiv",{Bottom:Round(this.Doc.GetElementById(Control).OffSetHeight+OffSetY) "px"})
+				this.Update("Buttons > Button",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color})
+				this.Update("Buttons",{"Margin-Bottom":OffSetY "px"})
+				this.Update("Buttons > Button:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
 			}
 		}
-		this.Update("ContentDiv",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color,"Margin-Top":OffSetY "px","Margin-Bottom":OffSetY*2 "px","Margin-Right":OffSetX "px"})
-		this.Update("Button:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(4px)TranslateY(4px)","Z-Index":1},1)
-		this.Update("Button",{"Box-Shadow":OffSetX " " OffSetY " " (SubStr(Color,1,1)="#"?"":"#") Color},1)
-		this.Update("Button:Active",{"Box-Shadow":"0 0 0","Z-Index":1,Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"},1)
-		this.Update("Footer",{"Margin-Bottom":OffSetY "px"})
-		this.Update("Header",{"Margin-Right":OffSetX "px"})
-	}Size(Something,W,H){
-		this:=MsgBoxClass.Keep[this]
-		ControlMove,,,,%W%,%H%,% "ahk_id" this.IE
-	}Update(Control:="",Info:="",No#:=""){
-		static Elements:={Footer:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"}
-					  ,Header:{Position:"Absolute",Left:0,Right:0,Top:0}
-					  ,Content:{OverFlow:"Auto",Height:"100%"}}
+	}Size(){
+		local
+		global MsgBoxClass
+		Pos:=(this:=MsgBoxClass.Keep[this]).WinPos()
+		ControlMove,,,,% Pos.W,% Pos.H,% "ahk_id" this.IE
+	}Update(Control:="",Info:="",No#:="",Dot:=""){
 		if(!Control)
 			return Elements
-		if(!Obj:=Elements[Control])
-			Obj:=Elements[Control]:=[]
+		if(!Obj:=this.Elements[Control])
+			Obj:=this.Elements[Control]:=[]
 		for a,b in Info
 			Obj[a]:=b
 		for a,b in Obj
@@ -154,10 +245,9 @@ Class MsgBoxClass{
 		if(!Update:=this.Doc.GetElementById(Control "Style"))
 			Update:=this.Doc.CreateElement("Style"),Update.ID:=Control "Style",this.Doc.GetElementById("Styles").AppendChild(Update)
 		Update.InnerText:=(No#?"":"#") Control "{" List "}"
-		/*
-			if(InStr(Control," "))
-				m(Update.OuterHtml)
-		*/
+	}WinPos(){
+		VarSetCapacity(Rect,16),DllCall("GetClientRect",Ptr,this.Main,Ptr,&Rect)
+		return {w:NumGet(Rect,8),h:NumGet(Rect,12)}
 	}
 }
 return
@@ -172,7 +262,7 @@ Sound(){
 	return
 }
 Drop(this){
-	return this.Shadow(4,5)
+	this.Shadow(9,4)
 }
 Stop(this){
 	this.Img()
@@ -200,16 +290,93 @@ Pretty(this){
 	this.Update("Title",{Background:"Linear-Gradient(90deg, #000 0%, #444 15%,#ff0000 50%, #fff 100%)",Border:"",Height:"22px","Line-Height":"22px"})
 }
 Edges(this){
-	for a,b in ["Close","Why","Title","ContentDiv"]
-		this.Update(b,{"Border-Radius":"20px"})
-	this.Update("ContentDiv",{Padding:"10px",Border:"2px Solid Grey"})
-	this.Update("Button",{"Border-Radius":"20px"},1)
+	static Toggle:=0
+	if(Toggle:=!Toggle){
+		for a,b in ["Div","Button"]
+			this.Update("OverAll " b,{"Border-Radius":"20px"})
+		this.Update("ContentDiv",{Padding:"10px"})
+	}else{
+		for a,b in ["Div","Button"]
+			this.Elements.Delete("OverAll " b),Rem:=this.Get("OverAll " b "Style"),Rem.ParentNode.RemoveChild(Rem)
+		this.Elements.ContentDiv.Delete("Padding"),this.Update("ContentDiv")
+	}
 	/*
-		All:=this.Doc.GetElementsByTagName("Button")
-		while(aa:=All.Item[A_Index-1])
-			this.Update(aa.ID,{"Border-Radius":"20px"})
+	*/
+	
+	/*
+		for a,b in ["Close","Why","Title","ContentDiv","Save-Position"]
+			this.Update(b,{"Border-Radius":"20px"})
+		this.Update("ContentDiv",{Padding:"10px",Border:"2px Solid Grey"})
+		this.Update("Button",{"Border-Radius":"20px"},1)
 	*/
 }
-Why(this){
-	MsgBox,Because I can :)
+m(x*){
+	static List:={BTN:{OC:1,ARI:2,YNC:3,YN:4,RC:5,CTC:6},ico:{X:16,"?":32,"!":48,I:64}},Msg:=[],xx,y,w,h,XPos:=Round(A_ScreenWidth*.7825),Center:=0,TT
+	static Title
+	List.Title:="Right Click Menu+",List.Def:=0,List.Time:=0,Value:=0,TXT:="",Bottom:=0
+	WinGetTitle,Title,A
+	for a,b in x
+		Obj:=StrSplit(b,":"),(Obj.1="Bottom"?(Bottom:=1):""),(VV:=List[Obj.1,Obj.2])?(Value+=VV):(List[Obj.1]!="")?(List[Obj.1]:=Obj.2):TXT.=(b.XML?b.XML:IsObject(b)?Obj2String(b,,Bottom):b) "`n"
+	Msg:={option:Value+262144+(List.Def?(List.Def-1)*256:0),Title:List.Title,Time:List.Time,TXT:TXT}
+	Sleep,120
+	MsgBox,% Msg.option,% Msg.Title,% Msg.TXT,% Msg.Time
+	for a,b in {OK:Value?"OK":"",Yes:"YES",No:"NO",Cancel:"CANCEL",Retry:"RETRY"}
+		IfMsgBox,%a%
+			return b
+	return
+}
+/*
+Obj2String(Obj,FullPath:="Blank",BottomBlank:=0){
+	static String,Blank
+	if(FullPath="Blank")
+		FullPath:=String:=FullPath:=Blank:=""
+	if(IsObject(Obj)){
+		Try
+			if(Obj.XML){
+				if(Obj.XML.XML){
+					Obj.Transform()
+					return String.=FullPath "XML Object:`n" Obj[]
+				}return String.=(FullPath?FullPath ".":"") Obj.XML "`n"
+			}
+		Try
+			if(Obj.OuterHtml)
+				return String.=FullPath "." Obj.OuterHtml "`n"
+		Try
+			for a,b in Obj{
+				if(IsObject(b))
+					Obj2String(b,FullPath "." a,BottomBlank)
+				else{
+					if(BottomBlank=0){
+						String.=(FullPath?FullPath ".":"") a " = " b "`n"
+					}else if(b!=""){
+						String.=(FullPath?FullPath ".":"") "." a " = " b "`n"
+					}else
+						Blank.=(FullPath?FullPath ".":"") "." a " =`n"
+				}
+			}
+		Catch
+			String.=FullPath ".Unknown Object Type`n"
+	}return Trim(String Blank,"`n")
+}
+*/
+
+
+Obj2String(Obj,FullPath:=1,BottomBlank:=0){
+	static String,Blank
+	if(FullPath=1)
+		String:=FullPath:=Blank:=""
+	if(IsObject(Obj)){
+		for a,b in Obj{
+			if(IsObject(b)&&!b.XML)
+				Obj2String(b,FullPath "." a,BottomBlank)
+			else{
+				if(BottomBlank=0)
+					String.=FullPath "." a " = " (b.XML?b.XML:b) "`n"
+				else if(b!="")
+					String.=FullPath "." a " = " (b.XML?b.XML:b) "`n"
+				else
+					Blank.=FullPath "." a " =`n"
+			}
+	}}
+	return String Blank
 }
