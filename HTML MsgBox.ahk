@@ -33,28 +33,16 @@ Class MsgBoxClass{
 		Gui,Margin,0,0
 		Ver:=this.FixIE(11)
 		Gui,Add,ActiveX,w800 h400 vwb HWNDIE,mshtml
-		this.Main:=Main
-		this.FixIE(Ver)
-		wb.Navigate("about:blank")
-		while(wb.ReadyState!=4)
-			Sleep,100
-		this.Doc:=wb.Document
-		MsgBoxClass.Keep[Main]:=this
-		/*
-			wb.Navigate("about:<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div ID='Image' Style='Display:Flex;Width-0px;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>")
-		*/
-		wb.Navigate("about:blank")
+		this.Main:=Main,this.FixIE(Ver),this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,wb.Navigate("about:blank")
 		while(wb.ReadyState!=4)
 			Sleep,10
+		this.Doc:=wb.Document
 		wb.Doc.Body.OuterHtml:="<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Save-Position' UnSelectable='on' Class='tooltip'>S<Span Class='ToolTipText' Style='Border:2px Solid Grey'>Save The MsgBox Position</Span></Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div ID='Image' Style='Display:Flex;Width-0px;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>"
 		SysGet,Border,33
 		SysGet,Edge,45
-		this.Border:=Border
-		this.Edge:=Edge
-		this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}")
+		this.Border:=Border,this.Edge:=Edge,this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}")
 		RegRead,CheckReg,HKCU\SOFTWARE\Microsoft\Windows\DWM,ColorizationColor
-		Color:=SubStr(Format("{:x}",CheckReg+0),-5)
-		this.Color:=Color?Color:"AAAAAA"
+		Color:=SubStr(Format("{:x}",CheckReg+0),-5),this.Color:=Color?Color:"AAAAAA"
 		this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"}
 					,Header:{Position:"Absolute",Left:0,Right:0,Top:0}
 					,Content:{OverFlow:"Auto",Height:"100%",Color:"Pink",Width:"100%"}
@@ -69,10 +57,7 @@ Class MsgBoxClass{
 					,Img:{Width:"0px"}}
 		for a,b in this.Elements
 			this.Update(a,b)
-		this.Update(".tooltip",{Position:"Relative",Display:"Inline-Block"},1)
-		this.Update(".tooltip .tooltiptext",{Width:"120px","Background-Color":"Black",Color:"#FFF","Text-Align":"Center","Border-Radius":"6px",Padding:"5px",Position:"Absolute","Z-Index":"8",Top:"10px",Right:"105%",Visibility:"Hidden"},1)
-		this.Update(".tooltip:hover .tooltiptext",{Visibility:"Visible"},1)
-		this.Update("HTML Body",{"Background":"Black"},1)
+		this.Update(".tooltip",{Position:"Relative",Display:"Inline-Block"},1),this.Update(".tooltip .tooltiptext",{Width:"120px","Background-Color":"Black",Color:"#FFF","Text-Align":"Center","Border-Radius":"6px",Padding:"5px",Position:"Absolute","Z-Index":"8",Top:"10px",Right:"105%",Visibility:"Hidden"},1),this.Update(".tooltip:hover .tooltiptext",{Visibility:"Visible"},1),this.Update("HTML Body",{"Background":"Black"},1)
 		return this
 	}_Event(Name,Event){
 		local
@@ -103,18 +88,8 @@ Class MsgBoxClass{
 			Form:=this.Get("WinForm")
 			this.Get("WinForm").Style.Visibility:="Visible"
 			if(!this.Get("Window-Title")){
-				this.CreateElement("Div","","Move and Resize this window where you want it",Form)
-				this.CreateElement("Div","","It will return here when the below window is Active",Form)
-				this.CreateElement("Div","","Window Title:",Form)
-				this.CreateElement("Input","Window-Title","",Form)
-				this.CreateElement("Div","","Window Class:",Form)
-				this.CreateElement("Input","Window-Class","",Form)
-				this.CreateElement("Div","","Window EXE:",Form)
-				this.CreateElement("Input","Window-EXE","",Form)
-				this.CreateElement("Div","","`n",Form)
-				this.CreateElement("Input","Window-Submit","For Above Window",Form,{Type:"Button"})
-				this.CreateElement("Input","Window-Submit-Global","Global",Form,{Type:"Button"})
-				this.Update("Window-Title",{Width:"500px"})
+				for a,b in [["Div","NotWorking","NOT WORKING YET!",Form,"",{Color:"Red","Font-Size":"40px"}],["Div","","Move and Resize this window where you want it",Form],["Div","","It will return here when the below window is Active",Form],["Div","","Window Title:",Form],["Input","Window-Title","",Form],["Div","","Window Class:",Form],["Input","Window-Class","",Form],["Div","","Window EXE:",Form],["Input","Window-EXE","",Form],["Div","","`n",Form],["Input","Window-Submit","For Above Window",Form,{Type:"Button"}],["Input","Window-Submit-Global","Global",Form,{Type:"Button"}]]
+					this.CreateElement(b*)
 			}
 			WinGetPos,x,y,w,h,% this.ID
 			Gui,% this.Win ":+Resize +Caption"
