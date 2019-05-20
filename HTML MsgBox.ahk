@@ -178,30 +178,21 @@ Class MsgBoxClass{
 		return this.Doc.GetElementById(Control)
 	}Img(Text:="",ImageLocation:="",Width:="",Height:="",FontSize:=""){
 		local
-		(Element:=this.Doc.GetElementById("Img")).SRC:=ImageLocation
-		Element.Style.Width:=Width
-		Element.Style.Height:=Height
-		(Element:=this.Doc.GetElementById("Icon")).InnerHTML:=Text
+		(Element:=this.Doc.GetElementById("Img")).SRC:=ImageLocation,Element.Style.Width:=Width,Element.Style.Height:=Height,(Element:=this.Doc.GetElementById("Icon")).InnerHTML:=Text
 		if(FontSize)
 			Element.Style.FontSize:=FontSize "px"
 	}Shadow(OffSetX:=4,OffSetY:=4,Color:="444",Controls:="All"){
 		local
 		for a,Control in (Controls="All"?["Header","Buttons","ContentDiv"]:[Controls]){
 			this.Doc.GetElementById(Control)
-			if(Control="Header"){
-				this.Update("Header",{"Margin-Bottom":OffSetY "px","Margin-Right":OffSetX "px"})
-				this.Update("Header > Div",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color})
-				this.Update("ContentDiv",{Top:this.Doc.GetElementById(Control).OffSetHeight+OffSetY "px"})
-				this.Update("Save-Position:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
-				this.Update("Close:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
-			}if(Control="ContentDiv"){
+			if(Control="Header")
+				for a,b in [["Header",{"Margin-Bottom":OffSetY "px","Margin-Right":OffSetX "px"}],["Header > Div",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color}],["ContentDiv",{Top:this.Doc.GetElementById(Control).OffSetHeight+OffSetY "px"}],["Save-Position:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"}],["Close:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"}]]
+					this.Update(b*)
+			if(Control="ContentDiv")
 				this.Update(Control,{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color,"Margin-Right":OffSetX "px"})
-			}if(Control="Buttons"){
-				this.Update("ContentDiv",{Bottom:Round(this.Doc.GetElementById(Control).OffSetHeight+OffSetY) "px"})
-				this.Update("Buttons > Button",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color})
-				this.Update("Buttons",{"Margin-Bottom":OffSetY "px","Margin-Right":OffSetX "px"})
-				this.Update("Buttons > Button:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
-			}
+			if(Control="Buttons")
+				for a,b in [["ContentDiv",{Bottom:Round(this.Doc.GetElementById(Control).OffSetHeight+OffSetY) "px"}],["Buttons > Button",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color}],["Buttons",{"Margin-Bottom":OffSetY "px","Margin-Right":OffSetX "px"}],["Buttons > Button:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"}]]
+					this.Update(b*)
 		}
 	}Size(){
 		local
@@ -217,17 +208,9 @@ Class MsgBoxClass{
 			Obj[a]:=b
 		for a,b in Obj
 			List.=a ":" b ";"
-		/*
-			if(InStr(Control,"HTML Body"))
-				m(this.Elements["HTML Body"])
-		*/
 		if(!Update:=this.Doc.GetElementById(Control "Style"))
 			Update:=this.Doc.CreateElement("Style"),Update.ID:=Control "Style",this.Doc.GetElementById("Styles").AppendChild(Update)
 		Update.InnerText:=(No#?"":"#") Control "{" List "}"
-		/*
-			if(Control="Save-Position")
-				m(List,Update.OuterHtml)
-		*/
 	}WinPos(){
 		VarSetCapacity(Rect,16),DllCall("GetClientRect",Ptr,this.Main,Ptr,&Rect)
 		return {w:NumGet(Rect,8),h:NumGet(Rect,12)}
