@@ -1,6 +1,6 @@
 #SingleInstance,Force
 global CSS,wb,v:=[]
-m:=New MsgBoxClass()
+m:=New MsgBoxClass(,"My Title")
 m.Update("Close")
 m.Doc.GetElementById("Header").InsertBefore(m.CreateElement("Div","Save-Position","S",,{Class:"tooltip",UnSelectable:"On"}),m.Doc.GetElementById("Title"))
 m.Update("Save-Position")
@@ -10,21 +10,23 @@ m.Update("Close:Active",{Background:"Pink"})
 m.Update("Content",{Color:"Pink",Width:"100%"})
 m.Update("Buttons",{Bottom:"0px",Position:"Absolute",Display:"Flex",Height:"40px"})
 m.Update("Header",{Position:"Absolute",Top:"0px",Left:"0px",Right:"0px"})
-m.Update("HTML Body",{"background-color":"black"},1)
+m.Update("HTML Body",{"Background":"black"},1)
 m.Update("ContentDiv",{Border:"2px Solid Grey",Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0})
 m.Update("Title")
 m.AddButton({InnerHTML:"<u>D</u>rop Shadows",ID:"Drop"})
 m.AddButton({InnerHTML:"<u>R</u>ound Edges",ID:"Edges"})
 m.AddButton({InnerHTML:"<u>P</u>retty Title",ID:"Pretty"})
 m.AddButton({InnerHTML:"<u>S</u>how Me Something Cool",ID:"Cool"})
+m.AddButton({InnerHTML:"Fancy ScrollBar",ID:"Fancy"})
 m.AddButton({InnerHTML:"<u>M</u>ake A Sound",ID:"Sound"})
-m.AddButton({InnerHTML:"My Actual Response",ID:"What I Asked For"})
+m.AddButton({InnerHTML:"My Actual Response",Name:"Neat stuff man"})
 m.Update("Button",{"Z-Index":2,Display:"Relative"})
 m.Update("Img",{Width:"0px"})
-/*
+SeeCode:=0
+if(SeeCode)
 	Response:=m.Display(RegExReplace(m.Body.OuterHtml,"<","`n<"),1)
-*/
-Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
+else
+	Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
 MsgBox,%Response%
 ExitApp
 return
@@ -36,11 +38,12 @@ Class MsgBoxClass{
 	MM(){
 		m(Clipboard:=RegExReplace(this.Body.OuterHtml,"<","`n<"))
 	}
-	__New(Win:="MsgBox"){
+	__New(Win:="MsgBox",Title:=""){
 		static
 		Gui,%Win%:Destroy
 		Gui,%Win%:Default
 		Gui,%Win%:-Resize +HWNDMain -Caption +LabelMsgBoxClass.
+		this.Title:=Title?Title:A_ScriptName
 		Gui,Margin,0,0
 		Ver:=this.FixIE(11)
 		Gui,Add,ActiveX,w800 h400 vwb HWNDIE,mshtml
@@ -51,7 +54,7 @@ Class MsgBoxClass{
 			Sleep,100
 		this.Doc:=wb.Document
 		MsgBoxClass.Keep[Main]:=this
-		wb.Navigate("about:<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' unselectable='on'>X</Div><Div ID='Title' unselectable='on'>" A_ScriptName "</Div></Div><Div ID='ContentDiv'><Div ID='Image' Style='Display:Flex;Width-0px;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>")
+		wb.Navigate("about:<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' unselectable='on'>X</Div><Div ID='Title' unselectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div ID='Image' Style='Display:Flex;Width-0px;Flex-Direction:Column;Text-Align:Center'><img ID='Img' Style='Float:Left;Align:Center'/><p ID='Icon' Style='Float:Left;Color:Grey'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>")
 		while(wb.ReadyState!=4)
 			Sleep,10
 		SysGet,Border,33
@@ -149,8 +152,9 @@ Class MsgBoxClass{
 			Gui,% this.Win ":Hide"
 		}else if(IsFunc(Function:=Node.ID))
 			%Function%(this)
-		else if(Node.NodeName="Button")
-			this.Response:=Node.ID
+		else if(Node.NodeName="Button"){
+			this.Response:=Node.Name?Node.Name:Node.ID
+		}
 	}AddButton(Values:=""){
 		static Buttons:=[]
 		local
@@ -177,7 +181,7 @@ Class MsgBoxClass{
 		WinGet,Process,ProcessName,A
 		this.WinInfo:={Title:Title,Class:Class,EXE:Process}
 		this.Get("Content")[(AsText?"InnerText":"InnerHTML")]:=Text
-		Gui,% this.Win ":Show",h400
+		Gui,% this.Win ":Show",h400,% this.Title
 		while(!this.Response)
 			Sleep,200
 		return this.Response
@@ -224,7 +228,7 @@ Class MsgBoxClass{
 			}if(Control="Buttons"){
 				this.Update("ContentDiv",{Bottom:Round(this.Doc.GetElementById(Control).OffSetHeight+OffSetY) "px"})
 				this.Update("Buttons > Button",{"Box-Shadow":OffSetX " " OffSetY "px " (SubStr(Color,1,1)="#"?"":"#") Color})
-				this.Update("Buttons",{"Margin-Bottom":OffSetY "px"})
+				this.Update("Buttons",{"Margin-Bottom":OffSetY "px","Margin-Right":OffSetX "px"})
 				this.Update("Buttons > Button:Active",{"Box-Shadow":"0 0 0",Transform:"TranslateX(" OffSetX "px)TranslateY(" OffSetY "px)"})
 			}
 		}
@@ -309,6 +313,10 @@ Edges(this){
 		this.Update("ContentDiv",{Padding:"10px",Border:"2px Solid Grey"})
 		this.Update("Button",{"Border-Radius":"20px"},1)
 	*/
+}
+Fancy(this){
+	Color:=(BG:=this.Elements.Content.Background)?BG:this.Elements["HTML Body"].Background
+	this.Update("HTML Body",{overflow:"hidden","scrollbar-base-color":"#AAAAAA","scrollbar-3dlight-color":Color,"scrollbar-highlight-color":Color,"scrollbar-track-color":Color,"scrollbar-arrow-color":"white","scrollbar-shadow-color":Color,"scrollbar-dark-shadow-color":Color,margin:"0px"},1)
 }
 m(x*){
 	static List:={BTN:{OC:1,ARI:2,YNC:3,YN:4,RC:5,CTC:6},ico:{X:16,"?":32,"!":48,I:64}},Msg:=[],xx,y,w,h,XPos:=Round(A_ScreenWidth*.7825),Center:=0,TT
