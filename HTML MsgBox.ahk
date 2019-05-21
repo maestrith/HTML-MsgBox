@@ -1,28 +1,23 @@
 #SingleInstance,Force
 global CSS,wb,v:=[]
 m:=New MsgBoxClass(,"My Title")
-m.AddButton(0,{Btn:{Text:"Drop Shadows",ID:"Drop"},CSS:{Background:"Red",Color:"Orange"}},"Round Edges",{Btn:{Text:"Pretty Title"}},{Btn:{Text:"Show Me Something Cool",ID:"Cool"}},{Btn:{Text:"Fancy ScrollBar",ID:"Fancy"}},"Change Buttons")
-/*
-	m.AddButton("Thing","Other","Things")
-*/
-SeeCode:=1
+m.AddButton(0,{Btn:{Text:"Drop Shadows",ID:"Drop"},CSS:{Background:"Red",Color:"Orange"}},"Round Edges",{Btn:{Text:"Pretty Title"}},{Btn:{Text:"Show Me Something Cool",ID:"Cool"}},{Btn:{Text:"Fancy ScrollBar",ID:"Fancy"}},"Change Buttons","This Windows Code")
+m(m.Elements)
+SeeCode:=0
 if()
 	Cool(m)
-if(SeeCode)
-	m.Get("Title").InnerHTML:="This Window's Code",m.Update("Content",{OverFlow:"Auto","White-Space":"NoWrap"}),Response:=m.Display(m.Pretty(),1)
-else
-	Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
+Response:=m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
 MsgBox,%Response%
 ExitApp
 return
-Exit(){
+Escape(){
+	ExitApp
+}
+Close(){
 	ExitApp
 }
 Class MsgBoxClass{
 	Keep:=[]
-	MM(){
-		m(Clipboard:=RegExReplace(this.Body.OuterHtml,"<","`n<"))
-	}
 	__New(Win:="MsgBox",Title:=""){
 		static
 		Gui,%Win%:Destroy
@@ -37,8 +32,7 @@ Class MsgBoxClass{
 		SysGet,Border,33
 		SysGet,Edge,45
 		RegRead,CheckReg,HKCU\SOFTWARE\Microsoft\Windows\DWM,ColorizationColor
-		this.Main:=Main,this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,this.Doc:=wb.Document,this.Buttons:=[],this.Dup:=[],wb.Doc.Body.OuterHtml:="<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Save-Position' UnSelectable='on' Class='tooltip'>S<Span Class='ToolTipText' Style='Border:2px Solid Grey'>Save The MsgBox Position</Span></Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div><Img ID='Img' Style='Display:Flex;Width-0px;Flex-Direction:Column'/><p ID='Icon' Style='Float:Left;Color:Grey;Flex-Direction:Column;Text-Align:Center;Width:100%;Margin-Top:0px;OverFlow:Auto'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>",this.Color:=(CC:=SubStr(Format("{:x}",CheckReg+0),-5))?CC:"AAAAAA",this.Border:=Border,this.Edge:=Edge,this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}")
-		this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"},Header:{Position:"Absolute",Left:0,Right:0,Top:0},Content:{OverFlow:"Auto",Height:"100%",Color:"Pink",Width:"100%"},"Save-Position":{"Z-Index":2,Position:"Relative",Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color},Close:{"Z-Index":4,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color,Position:"Relative"},Title:{"Z-Index":1,"Line-Height":"20px","Height":"20px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:this.Color},"Close:Hover":{Background:"Red","Border-Color":"Red"},"Close:Active":{Background:"Pink"},"Save-Position:Hover":{Background:"Blue"},Buttons:{Bottom:"0px",Left:"0px",Position:"Absolute",Display:"Flex",Height:"40px"},ContentDiv:{Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0},Img:{Width:"0px"}}
+		this.Main:=Main,this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,this.Doc:=wb.Document,this.Buttons:=[],this.Dup:=[],wb.Doc.Body.OuterHtml:="<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Save-Position' UnSelectable='on' Class='tooltip'>S<Span Class='ToolTipText' Style='Border:2px Solid Grey'>Save The MsgBox Position</Span></Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div><Img ID='Img' Style='Display:Flex;Width-0px;Flex-Direction:Column'/><p ID='Icon' Style='Float:Left;Color:Grey;Flex-Direction:Column;Text-Align:Center;Width:100%;Margin-Top:0px;OverFlow:Auto'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>",this.Color:=(CC:=SubStr(Format("{:x}",CheckReg+0),-5))?CC:"AAAAAA",this.Border:=Border,this.Edge:=Edge,this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}"),this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"},Header:{Position:"Absolute",Left:0,Right:0,Top:0},Content:{OverFlow:"Auto",Height:"100%",Color:"Pink",Width:"100%"},"Save-Position":{"Z-Index":2,Position:"Relative",Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color},Close:{"Z-Index":4,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color,Position:"Relative"},Title:{"Z-Index":1,"Line-Height":"20px","Height":"20px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:this.Color},"Close:Hover":{Background:"Red","Border-Color":"Red"},"Close:Active":{Background:"Pink"},"Save-Position:Hover":{Background:"Blue"},Buttons:{Bottom:"0px",Left:"0px",Position:"Absolute",Display:"Flex",Height:"40px"},ContentDiv:{Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0},Img:{Width:"0px"}}
 		for a,b in this.Elements
 			this.Update(a,b)
 		this.Update(".tooltip",{Position:"Relative",Display:"Inline-Block"},1),this.Update(".tooltip .tooltiptext",{Width:"120px","Background-Color":"Black",Color:"#FFF","Text-Align":"Center","Border-Radius":"6px",Padding:"5px",Position:"Absolute","Z-Index":"8",Top:"10px",Right:"105%",Visibility:"Hidden"},1),this.Update(".tooltip:hover .tooltiptext",{Visibility:"Visible"},1),this.Update("HTML Body",{"Background":"Black"},1)
@@ -87,11 +81,12 @@ Class MsgBoxClass{
 					m(Title,Class,EXE)
 			}this.Set("OverAll",{Visibility:"Visible"}),this.Set("WinForm",{Visibility:"Hidden"}),this.Update("HTML Body",{"Background-Color":this.BackgroundColor,Color:this.Color},1)
 			return
-		}else if(Node.ID="Close"){
-			ExitApp
-			Gui,% this.Win ":Hide"
 		}else if(IsFunc(Function:=Node.ID))
 			%Function%(this)
+		else if(Node.ID="Close"){
+			this.Response:="CloseGUI"
+			Gui,% this.Win ":Hide"
+		}
 		else if(Node.NodeName="Button")
 			this.Response:=Node.Name?Node.Name:Node.ID
 	}Action(){
@@ -165,8 +160,8 @@ Class MsgBoxClass{
 		return this.Response
 	}Escape(){
 		Gui,% MsgBoxClass.Keep[this].Win ":Hide"
-		if(IsFunc(Exit:="Exit"))
-			%Exit%()
+		if(IsFunc(Escape:="Escape"))
+			%Escape%()
 	}FixIE(Version=0){ ;Thanks GeekDude
 		local
 		static Key:="Software\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION",Versions:={7:7000,8:8888,9:9999,10:10001,11:11001}
@@ -188,20 +183,6 @@ Class MsgBoxClass{
 		(Img:=this.Get("Img")).SRC:=ImageLocation,Img.Style.Width:=(Width?Width "px":Width),Img.Style.Height:=Height,(Icon:=this.Get("Icon")).innerHTML:=Text
 		if(FontSize)
 			Icon.Style.FontSize:=FontSize "px"
-	}Pretty(Return:=1){
-		static
-		All:=this.Doc.All
-		while(aa:=All.Item[A_Index-1]){
-			Parent:=aa,Tabs:=""
-			while(Parent:=Parent.ParentNode){
-				if(Parent.NodeName~="\b(document|HTML|BODY)\b")
-					Break
-				Tabs.=(Return?"         ":"`t")
-			}
-			Total.=Tabs SubStr(aa.OuterHtml,1,InStr(aa.OuterHtml,">")) "`r`n"
-		}if(Return)
-			return Total
-		MsgBox,%Total%
 	}Shadow(OffSetX:=4,OffSetY:=4,Color:="444",Controls:="All"){
 		local
 		for a,Control in (Controls="All"?["Header","Buttons","ContentDiv"]:[Controls]){
@@ -283,7 +264,7 @@ Cool(this){
 Pretty_Title(this){
 	static Toggle:=0
 	if(Toggle:=!Toggle)
-		this.Update("Title",{Background:"Linear-Gradient(90deg, #000 0%, #444 15%,#ff0000 50%, #fff 100%)",Border:"",Height:"20px","Line-Height":"20px"})
+		this.Update("Title",{Background:"Linear-Gradient(90deg, Purple 0%, #ff0000 80%,Black 100%)",Border:"",Height:"20px","Line-Height":"20px"})
 	else
 		this.Update("Title",{Background:this.Color})
 }
@@ -314,6 +295,33 @@ Fancy(this){
 }
 Change_Buttons(this){
 	this.AddButton(0,"This Button",{Btn:{Text:"Things",Name:"This will be returned"},CSS:{Background:"Orange",Color:"Blue"}},"Sound")
+}
+This_Windows_Code(this){
+	static Toggle:=1
+	if(!Toggle:=!Toggle)
+		m.Get("Title").InnerHTML:="This Window's Code",m.Update("Content",{OverFlow:"Auto","White-Space":"NoWrap"}),this.Get("Content").InnerText:=Pretty(this,1)
+	else
+		m.Get("Title").InnerHTML:=A_ScriptName,this.Get("Content").InnerHTML:="<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)"
+}
+Pretty(this,Return:=0){
+	All:=this.Doc.All
+	this.Update("Content",{OverFlow:"Auto","White-Space":"NoWrap"})
+	while(aa:=All.Item[A_Index-1]){
+		Parent:=aa,Tabs:=""
+		while(Parent:=Parent.ParentNode){
+			if(Parent.NodeName~="i)\b(document|HTML|BODY)\b")
+				Break
+			Tabs.=(Return?"         ":"`t")
+		}
+		if(aa.NodeName!="Style")
+			Total.=Tabs Str:=SubStr(aa.OuterHtml,1,InStr(aa.OuterHtml,">")) "`r`n"
+		else{
+			Total.=Tabs Str:=SubStr(aa.OuterHtml,1,InStr(aa.OuterHtml,"</" aa.NodeName ">")+8) "`r`n"
+		}
+	}
+	if(Return)
+		return Total
+	MsgBox,%Total%
 }
 m(x*){
 	static List:={BTN:{OC:1,ARI:2,YNC:3,YN:4,RC:5,CTC:6},ico:{X:16,"?":32,"!":48,I:64}},Msg:=[],xx,y,w,h,XPos:=Round(A_ScreenWidth*.7825),Center:=0,TT
