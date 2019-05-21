@@ -1,3 +1,5 @@
-0.000.3
+0.000.4
 Changed:
--Made it easier to do things
+-Cleaned up a lot of the Syntax
+-Made it so all of the example buttons toggle
+-Accelerator Keys: They work now
