@@ -7,6 +7,7 @@ if(ShowSettings:=0){
 	m.Display("Nice")
 }
 /*
+	;~ Adding Icons
 	II:=m.Img("&#x24CD;",,60,60,40) ;Circle With X
 	II:=m.Img("&#x26D4;",,60,60,40) ;Circle With Dash
 	II:=m.Img("&#x26D2;",,60,60,40) ;Circle With X Better?
