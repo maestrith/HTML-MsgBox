@@ -97,30 +97,14 @@ Class MsgBoxClass{
 		}else if(Node.ID="Save-Position"){
 			this.Get("OverAll").Style.Visibility:="Hidden",Form:=this.Get("WinForm"),this.Get("WinForm").Style.Visibility:="Visible"
 			this.SetHotkey(0)
-			/*
-				["Div","NotWorking","NOT WORKING YET!",Form,"",{Background:"Linear-Gradient(90deg, Purple 0%,#ff0000 50%, Black 100%)","Font-Size":"40px"}],
-			*/
 			EA:=this.EA(this.CurrentNode:=this.FindTitle(this.Window))
 			if(!this.Get("Window-Title")){
 				Form.AppendChild(New:=this.CreateElement("Div"))
 				WW:="Type='Text' Style='Width:100%'"
 				this.Doc.ParentWindow.LV:=this.LV.Bind(this)
-				AddHTML:=
-				(
-				"<Div>Window Title:</Div><Input ID='Window-Title' " WW "/><Div>Window Class:</Div><Input ID='Window-Class' " WW "/><Div>Window EXE:</Div><Input ID='Window-EXE' " WW "/><fieldset Style='Width:calc(100% - 35px)'><legend Style=''>Based On:</legend><Input Type='Checkbox' ID='Window-Height'/>Window Height<Div/><Button ID='Window-Pos' Name='Window'>Window Position</Button></fieldset></Div><Div></Div><Button ID='Window-Global' Name='Global' Style='Margin-Top:10px'>Global Position</Button><Style>Input:Focus{Background:Gold;outline:2px Solid Gold;" Chr(125) "</Style><Div ID='Table' Style='Padding-Top:10px'><table></table></Div>
-				<Style>
-				table {Border-Collapse:Collapse;Border-Spacing:0;Width:100%;Border:2px Solid #ddd;" Chr(125) "
-				td{Border:1px Solid #dddddd;Text-Align:Left;Padding:8px;" Chr(125) "
-				td{Text-Align:Left;Padding:16px;Text-Align:Left;Cursor:Hand;" Chr(125) "
-				th{Text-Align:Left;Padding:16px;Color:Red;" Chr(125) "
-				</Style>
-				"
-				)
+				AddHTML:="<Div>Window Title:</Div><Input ID='Window-Title' " WW "/><Div>Window Class:</Div><Input ID='Window-Class' " WW "/><Div>Window EXE:</Div><Input ID='Window-EXE' " WW "/><fieldset Style='Width:calc(100% - 35px)'><legend Style=''>Based On:</legend><Input Type='Checkbox' ID='Window-Height'/>Window Height<Div/><Button ID='Window-Pos' Name='Window'>Window Position</Button></fieldset></Div><Div></Div><Button ID='Window-Global' Name='Global' Style='Margin-Top:10px'>Global Position</Button><Style>Input:Focus{Background:Gold;outline:2px Solid Gold;" Chr(125) "</Style><Div ID='Table' Style='Padding-Top:10px'><table></table></Div><Style>table {Border-Collapse:Collapse;Border-Spacing:0;Width:100%;Border:2px Solid #ddd;" Chr(125) "td{Border:1px Solid #dddddd;Text-Align:Left;Padding:8px;" Chr(125) "td{Text-Align:Left;Padding:16px;Text-Align:Left;Cursor:Hand;" Chr(125) "th{Text-Align:Left;Padding:16px;Color:Red;" Chr(125) "</Style>"
 				New.InnerHTML:=AddHTML
 			}
-			
-			
-			
 			if(1){
 				Table:=this.Doc.GetElementsByTagName("Table").Item[0],PP:=Table.ParentNode,Table.ParentNode.RemoveChild(Table)
 				Table:=this.CreateElement("Table",,,PP)
@@ -144,12 +128,6 @@ Class MsgBoxClass{
 				}
 			}
 			PP.Style.Width:="100%"
-			/*
-				PP.Style.Height:="100%"
-			*/
-			/*
-				PP.Style.OverFlow:="Auto"
-			*/
 			if(EA.Height)
 				this.Get("Window-Height").SetAttribute("Checked","On")
 			else
@@ -176,9 +154,6 @@ Class MsgBoxClass{
 			Tab+=InStr(A_ThisHotkey,"+")?-1:1
 			Tab:=Tab<1?TabOrder.MaxIndex():Tab>TabOrder.MaxIndex()?1:Tab
 			CTRL.Get(TabOrder[Tab]).Focus()
-			/*
-				t(TabOrder[Tab],Tab)
-			*/
 			return
 		}if(Node.ID="Window-Pos"||Node.ID="Window-Global"){
 			Win:=this.Window
