@@ -49,35 +49,26 @@ Class MsgBoxClass{
 		SysGet,Caption,31
 		SysGet,Edge,45
 		RegRead,CheckReg,HKCU\SOFTWARE\Microsoft\Windows\DWM,ColorizationColor
-		;~ wb.Doc.Body.OuterHtml:="<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Save-Position' UnSelectable='on' Class='tooltip'>S<Span Class='ToolTipText' Style='Border:2px Solid Grey'>Save The MsgBox Position</Span></Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div><Img ID='Img' Style='Display:Flex;Width-0px;Flex-Direction:Column'/><p ID='Icon' Style='Float:Left;Color:Grey;Flex-Direction:Column;Text-Align:Center;Width:100%;Margin-Top:0px;OverFlow:Auto'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>",this.Main:=Main,this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,this.Doc:=wb.Document,this.Buttons:=[],this.Dup:=[],this.Color:=(CC:=SubStr(Format("{:x}",CheckReg+0),-5))?CC:"AAAAAA",this.Border:=Border,this.Caption:=Caption,this.Edge:=Edge,this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}"),this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"},Header:{Position:"Absolute",Left:0,Right:0,Top:0},Content:{OverFlow:"Auto",Height:"100%",Color:"Pink",Width:"100%"},"Save-Position":{"Z-Index":2,Position:"Relative",Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color},Close:{"Z-Index":4,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color,Position:"Relative"},Title:{"Z-Index":1,"Line-Height":"20px","Height":"20px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:this.Color},"Close:Hover":{Background:"Red","Border-Color":"Red"},"Close:Active":{Background:"Pink"},"Save-Position:Hover":{Background:"Blue"},Buttons:{Bottom:"0px",Left:"0px",Position:"Absolute",Display:"Flex",Height:"40px"},ContentDiv:{Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0},Img:{Width:"0px"}}
-		wb.Doc.Body.OuterHtml:="<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Save-Position' UnSelectable='on' Class='tooltip'>S<Span Class='ToolTipText' Style='Border:2px Solid Grey'>Save The MsgBox Position</Span></Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div><Img ID='Img' Style='Display:Flex;Width-0px;Flex-Direction:Column'/><p ID='Icon' Style='Float:Left;Color:Grey;Flex-Direction:Column;Text-Align:Center;Width:100%;Margin-Top:0px;OverFlow:Auto'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>",this.Main:=Main,this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,this.Doc:=wb.Document,this.Buttons:=[],this.Dup:=[],this.Color:=(CC:=SubStr(Format("{:x}",CheckReg+0),-5))?CC:"AAAAAA",this.Border:=Border,this.Caption:=Caption,this.Edge:=Edge,this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}"),this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"},Header:{Position:"Absolute",Left:0,Right:0,Top:0},Content:{OverFlow:"Auto",Height:"100%",Color:"Pink",Width:"100%"},"Save-Position":{"Z-Index":2,Position:"Relative",Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color},Close:{"Z-Index":4,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color,Position:"Relative"},Title:{"Z-Index":1,"Line-Height":"20px","Height":"20px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:this.Color},"Close:Hover":{Background:"Red","Border-Color":"Red"},"Close:Active":{Background:"Pink"},"Save-Position:Hover":{Background:"Blue"},Buttons:{Bottom:"0px",Left:"0px",Position:"Absolute",Display:"Flex",Height:"40px"},ContentDiv:{Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0},Img:{Width:"0px"}}
+		wb.Doc.Body.OuterHtml:="<Body><Div ID='WinForm' Style='Visibility:hidden'></Div><Div ID='OverAll'><Div ID='Header'><Div ID='Close' UnSelectable='on'>X</Div><Div ID='Save-Position' UnSelectable='on' Class='tooltip'>S<Span Class='ToolTipText' Style='Border:2px Solid Grey'>Save The MsgBox Position</Span></Div><Div ID='Title' UnSelectable='on'>" this.Title "</Div></Div><Div ID='ContentDiv'><Div><Img ID='Img' Style='Display:Flex;Width-0px;Flex-Direction:Column'/><p ID='Icon' Style='Float:Left;Color:Grey;Flex-Direction:Column;Text-Align:Center;Width:100%;Margin-Top:0px;OverFlow:Auto'/></Div><Div ID='Content'></Div></Div><Div ID='Buttons'></Div></Div><Styles ID='Styles'></Styles></Body>",this.Main:=Main,this.Doc:=wb.Document,MsgBoxClass.Keep[Main]:=this,this.Buttons:=[],this.Dup:=[],this.Color:=(CC:=SubStr(Format("{:x}",CheckReg+0),-5))?CC:"AAAAAA",this.Border:=Border,this.Caption:=Caption,this.Edge:=Edge,this.Body:=this.Doc.Body,this.ID:="ahk_id" Main,this.Win:=Win,this.IE:=IE,this.Doc.ParentWindow.ahk_event:=this._Event.Bind(this),this.CreateElement("Script",,"onmousedown=function(event){ahk_event('MouseDown',event);" Chr(125) ";onclick=function(event){ahk_event('OnClick',event);" "}"),this.Elements:={Buttons:{Position:"Absolute",Left:0,Right:0,Bottom:0,Height:"30px"},Header:{Position:"Absolute",Left:0,Right:0,Top:0},Content:{OverFlow:"Auto",Height:"100%",Color:"Pink",Width:"100%"},"Save-Position":{"Z-Index":2,Position:"Relative",Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color},Close:{"Z-Index":4,Cursor:"Hand","Text-Align":"Center",Top:0,Color:"Black",Float:"Right",Right:0,Width:"30px",Height:"20px","Line-Height":"20px",Background:this.Color,Position:"Relative"},Title:{"Z-Index":1,"Line-Height":"20px","Height":"20px","White-Space":"NoWrap","OverFlow":"Hidden","Text-Overflow":"Ellipsis","Text-Align":"Center",Cursor:"Move",Background:this.Color},"Close:Hover":{Background:"Red","Border-Color":"Red"},"Close:Active":{Background:"Pink"},"Save-Position:Hover":{Background:"Blue"},Buttons:{Bottom:"0px",Left:"0px",Position:"Absolute",Display:"Flex",Height:"40px"},ContentDiv:{Position:"Absolute",Display:"Flex",Top:"20px",Bottom:"40px",Right:0,Left:0},Img:{Width:"0px"}}
 		for a,b in this.Elements
 			this.Update(a,b)
 		this.Update(".tooltip",{Position:"Relative",Display:"Inline-Block"},1),this.Update(".tooltip .tooltiptext",{Width:"120px","Background-Color":"Black",Color:"#FFF","Text-Align":"Center","Border-Radius":"6px",Padding:"5px",Position:"Absolute","Z-Index":"8",Top:"10px",Right:"105%",Visibility:"Hidden"},1),this.Update(".tooltip:hover .tooltiptext",{Visibility:"Visible"},1),this.Update("HTML Body",{"Background":"Black"},1),this.Arrows:=[]
 		for a,b in ["Up","Down","Left","Right"]
-			this.Arrows.Push(b),this.Arrows.Push("!" b)
+			this.Arrows.Push("+" b),this.Arrows.Push("!" b)
 		return this
-	}LV(Name,Event){
-		Node:=Event.srcElement
-		m("HERE!",Node.OuterHtml)
 	}_Event(Name,Event){
 		static
-		Node:=Event.srcElement
-		CTRL:=this
+		Node:=Event.srcElement,CTRL:=this
 		if((Node.NodeName="TD"||Node.ParentNode.NodeName="TD")&&Name="OnClick"){
 			if(Node.GetElementsByTagName("Input").Item[0])
-				t()
+				ToolTip
 			else{
 				InputBox,NewInfo,Update Information,% "New Value For " Node.GetAttribute("Name"),,,,,,,,% Node.InnerText
 				if(ErrorLevel)
 					return
-				this.XML.SelectSingleNode("//Window[" Node.ID "]").SetAttribute(Node.GetAttribute("Name"),NewInfo)
-				Node.InnerText:=NewInfo
-				this.Save()
-			}
-			return
-		}
-		if(Name="MouseDown"){
+				this.XML.SelectSingleNode("//Window[" Node.ID "]").SetAttribute(Node.GetAttribute("Name"),NewInfo),Node.InnerText:=NewInfo,this.Save()
+			}return
+		}if(Name="MouseDown"){
 			if(Node.ID="Title"){
 				Mode:=A_CoordModeMouse
 				CoordMode,Mouse,Screen
@@ -96,43 +87,26 @@ Class MsgBoxClass{
 				return
 			}return
 		}else if(Node.ID="Save-Position"){
-			this.Get("OverAll").Style.Visibility:="Hidden",Form:=this.Get("WinForm"),this.Get("WinForm").Style.Visibility:="Visible"
-			this.SetHotkey(0)
-			EA:=this.EA(this.CurrentNode:=this.FindTitle(this.Window))
-			if(!this.Get("Window-Title")){
-				Form.AppendChild(New:=this.CreateElement("Div"))
-				WW:="Type='Text' Style='Width:100%'"
-				this.Doc.ParentWindow.LV:=this.LV.Bind(this)
-				AddHTML:="<Div>Window Title:</Div><Input ID='Window-Title' " WW "/><Div>Window Class:</Div><Input ID='Window-Class' " WW "/><Div>Window EXE:</Div><Input ID='Window-EXE' " WW "/><fieldset Style='Width:calc(100% - 35px)'><legend Style=''>Based On:</legend><Input Type='Checkbox' ID='Window-Height'/>Window Height<Div/><Button ID='Window-Pos' Name='Window'>Window Position</Button></fieldset></Div><Div></Div><Button ID='Window-Global' Name='Global' Style='Margin-Top:10px'>Global Position</Button><Style>Input:Focus{Background:Gold;outline:2px Solid Gold;" Chr(125) "</Style><Div ID='Table' Style='Padding-Top:10px'><table></table></Div><Style>table {Border-Collapse:Collapse;Border-Spacing:0;Width:100%;Border:2px Solid #ddd;" Chr(125) "td{Border:1px Solid #dddddd;Text-Align:Left;Padding:8px;" Chr(125) "td{Text-Align:Left;Padding:16px;Text-Align:Left;Cursor:Hand;" Chr(125) "th{Text-Align:Left;Padding:16px;Color:Red;" Chr(125) "</Style>"
-				New.InnerHTML:=AddHTML
-			}
+			this.Get("OverAll").Style.Visibility:="Hidden",Form:=this.Get("WinForm"),this.Get("WinForm").Style.Visibility:="Visible",this.SetHotkey(0),EA:=this.EA(this.CurrentNode:=this.FindTitle(this.Window))
+			if(!this.Get("Window-Title"))
+				Form.AppendChild(New:=this.CreateElement("Div")),WW:="Type='Text' Style='Width:100%'",AddHTML:="<Div>Window Title:</Div><Input ID='Window-Title' " WW "/><Div>Window Class:</Div><Input ID='Window-Class' " WW "/><Div>Window EXE:</Div><Input ID='Window-EXE' " WW "/><fieldset Style='Width:calc(100% - 35px)'><legend Style=''>Based On:</legend><Input Type='Checkbox' ID='Window-Height'/>Window Height<Div/><Button ID='Window-Pos' Name='Window'>Window Position</Button></fieldset></Div><Div></Div><Button ID='Window-Global' Name='Global' Style='Margin-Top:10px'>Global Position</Button><Style>Input:Focus{Background:Gold;outline:2px Solid Gold;" Chr(125) "</Style><Div ID='Table' Style='Padding-Top:10px'><table></table></Div><Style>table {Border-Collapse:Collapse;Border-Spacing:0;Width:100%;Border:2px Solid #ddd;" Chr(125) "td{Border:1px Solid #dddddd;Text-Align:Left;Padding:8px;" Chr(125) "td{Text-Align:Left;Padding:16px;Text-Align:Left;Cursor:Hand;" Chr(125) "th{Text-Align:Left;Padding:16px;Color:Red;" Chr(125) "</Style>",New.InnerHTML:=AddHTML
 			if(1){
-				Table:=this.Doc.GetElementsByTagName("Table").Item[0],PP:=Table.ParentNode,Table.ParentNode.RemoveChild(Table)
-				Table:=this.CreateElement("Table",,,PP)
-				for a,b in {TR:(Headers:=["Title","Class","EXE"])}{ ;,"Height"
+				Table:=this.Doc.GetElementsByTagName("Table").Item[0],PP:=Table.ParentNode,Table.ParentNode.RemoveChild(Table),Table:=this.CreateElement("Table",,,PP)
+				for a,b in {TR:(Headers:=["Title","Class","EXE"])}{
 					Parent:=Table.AppendChild(this.CreateElement(a))
 					for c,d in b
 						Parent.AppendChild(this.CreateElement("TH",,d))
-				}
-				All:=this.XML.SelectNodes("//Window")
+				}All:=this.XML.SelectNodes("//Window")
 				while(aa:=All.Item[A_Index-1],ea1:=this.EA(aa)){
-					Index:=A_Index
-					Parent:=Table.AppendChild(this.CreateElement("tr"))
+					Index:=A_Index,Parent:=Table.AppendChild(this.CreateElement("tr"))
 					for a,b in Headers{
 						Parent.AppendChild(TD:=this.CreateElement("td",,(b!="Height"?ea1[b]:""),,{ID:Index,Name:b}))
 						if(b="Height"){
 							TD.AppendChild(Check:=this.CreateElement("Input",,,,{Type:"Checkbox",ID:Index,Name:b}))
 							if(ea1.Height)
 								Check.SetAttribute("Checked","on")
-						}
-					}
-				}
-			}
-			PP.Style.Width:="100%"
-			if(EA.Height)
-				this.Get("Window-Height").SetAttribute("Checked","On")
-			else
-				this.Get("Window-Height").RemoveAttribute("Checked")
+			}}}}PP.Style.Width:="100%"
+			(EA.Height)?this.Get("Window-Height").SetAttribute("Checked","On"):this.Get("Window-Height").RemoveAttribute("Checked")
 			Hotkey,IfWinActive,% this.ID
 			Hotkey,Tab,MsgBox-Tab,On
 			Hotkey,+Tab,MsgBox-Tab,On
@@ -145,21 +119,16 @@ Class MsgBoxClass{
 			WinMove,% this.ID,,% x-(this.Border)+this.Edge,,% w+(this.Border*2)-(this.Edge*2),% h+(this.Border)-(this.Edge)
 			for a,b in {Title:"Window-Title",Class:"Window-Class",EXE:"Window-EXE"}
 				this.Get(b).Value:=this.CurrentNode?EA[a]:this.Window[a] ;,m(this.CurrentNode?EA[a]:this.Window[a],this.Window)
-			this.BackgroundColor:=(OO:=this.Elements)["HTML Body","Background-Color"],this.Color:=OO["HTML Body"].Color,this.Update("HTML Body",{"Background-Color":"Black",Color:"Grey"},1)
-			TabOrder:=[],OrderTab:=[],Tab:=0
+			this.BackgroundColor:=(OO:=this.Elements)["HTML Body","Background-Color"],this.Color:=OO["HTML Body"].Color,this.Update("HTML Body",{"Background-Color":"Black",Color:"Grey"},1),TabOrder:=[],OrderTab:=[],Tab:=0
 			for a,b in ["Window-Title","Window-Class","Window-EXE","Window-Height","Window-Pos","Window-Global"]
 				TabOrder.Push(b),OrderTab[b]:=A_Index
 			SetTimer,MsgBox-Tab,-1
 			return
 			MsgBox-Tab:
-			Tab+=InStr(A_ThisHotkey,"+")?-1:1
-			Tab:=Tab<1?TabOrder.MaxIndex():Tab>TabOrder.MaxIndex()?1:Tab
-			CTRL.Get(TabOrder[Tab]).Focus()
+			Tab:=Round(OrderTab[CTRL.Doc.ActiveElement.ID]),Tab+=InStr(A_ThisHotkey,"+")?-1:1,Tab:=Tab<1?TabOrder.MaxIndex():Tab>TabOrder.MaxIndex()?1:Tab,CTRL.Get(TabOrder[Tab]).Focus()
 			return
 		}if(Node.ID="Window-Pos"||Node.ID="Window-Global"){
-			Win:=this.Window
-			Win.Height:=this.Get("Window-Height").Checked?1:0
-			Win.Title:=this.Get("Window-Title").Value,Win.Class:=this.Get("Window-Class").Value,Win.EXE:=this.Get("Window-EXE").Value
+			Win:=this.Window,Win.Height:=this.Get("Window-Height").Checked?1:0,Win.Title:=this.Get("Window-Title").Value,Win.Class:=this.Get("Window-Class").Value,Win.EXE:=this.Get("Window-EXE").Value
 			WinGetPos,x,y,w,h,% this.ID
 			Gui,% this.Win ":-Resize"
 			WinMove,A,,% (X:=x+this.Border-this.Edge),,% (W:=w-(this.Border*2)+(this.Edge*2)),% (H:=h-(this.Border)+(this.Edge))
@@ -173,29 +142,22 @@ Class MsgBoxClass{
 			if(Node.Name="Global"){
 				for a,b in ["Height"]
 					this.CurrentNode.RemoveAttribute(b)
-				this.Get("Window-Height").RemoveAttribute("checked")
-				OO:=this.Get("Window-Height").Checked:=0
+				this.Get("Window-Height").RemoveAttribute("checked"),OO:=this.Get("Window-Height").Checked:=0
 			}this.Save()
 			if(){
 				if(InStr(Node.ID,"Global"))
 					m("GLOBAL!")
 				else
 					m(Title,Class,EXE)
-			}this.Set("OverAll",{Visibility:"Visible"}),this.Set("WinForm",{Visibility:"Hidden"}),this.Update("HTML Body",{"Background-Color":this.BackgroundColor,Color:this.Color},1)
-			this.Update("HTML Body",{OverFlow:"Hidden"},1)
-			this.Body.ScrollTop:="0px"
-			this.Body.ScrollLeft:="0px"
-			this.SetHotkey(1)
+			}this.Set("OverAll",{Visibility:"Visible"}),this.Set("WinForm",{Visibility:"Hidden"}),this.Update("HTML Body",{"Background-Color":this.BackgroundColor,Color:this.Color},1),this.Update("HTML Body",{OverFlow:"Hidden"},1),this.Body.ScrollTop:="0px",this.Body.ScrollLeft:="0px",this.SetHotkey(1)
 			return
 		}else if(IsFunc(Function:=Node.ID))
 			%Function%(this)
 		else if(Node.ID="Close"){
 			this.Response:="CloseGUI"
 			Gui,% this.Win ":Hide"
-		}
-		else if(Node.NodeName="Button"){
+		}else if(Node.NodeName="Button")
 			this.Response:=Node.Name?Node.Name:Node.ID
-		}
 	}Action(){
 		Node:=this.Hotkeys[A_ThisHotkey]
 		if(IsFunc(Function:=Node.ID))
@@ -209,17 +171,14 @@ Class MsgBoxClass{
 				while(aa:=this.Doc.GetElementsByTagName("Button").Item[0])
 					aa.ParentNode.RemoveChild(aa)
 				Continue
-			}
-			if(this.Dup[(IsObject(b)?b.Btn.Text:b)]),this.Dup[(IsObject(b)?b.Btn.Text:b)]:=1
+			}if(this.Dup[(IsObject(b)?b.Btn.Text:b)]),this.Dup[(IsObject(b)?b.Btn.Text:b)]:=1
 				Continue
-			New:=this.CreateElement("Button",,,this.Doc.GetElementById("Buttons"))
-			this.Buttons.Push(New)
+			New:=this.CreateElement("Button",,,this.Doc.GetElementById("Buttons")),this.Buttons.Push(New)
 			if(!IsObject(b)){
 				New.InnerHTML:=b,New.ID:=RegExReplace(b,"\s","_")
 				Continue
 			}else{
-				Btn:=b.Btn
-				Btn.InnerHTML:=Btn.Text,Btn.Delete("Text")
+				Btn:=b.Btn,Btn.InnerHTML:=Btn.Text,Btn.Delete("Text")
 				if(!Btn.ID)
 					Btn.ID:=RegExReplace(Btn.InnerHTML,"\s","_")
 				for c,d in Btn
@@ -247,11 +206,7 @@ Class MsgBoxClass{
 	}ConCat(Att,Text){
 		if(!Text)
 			return "@" Att "='' or not(@" Att ")"
-		if(InStr(Text,"'"))
-			Text:=RegExReplace("concat('" RegExReplace(Text,"'","'," Chr(34) "'" Chr(34) ",'") "')","('',|,'')")
-		else
-			Text:="'" Text "'"
-		Text:="contains(" Text ",@" Att ") and @" Att "!='' or @" Att "=''"
+		Text:=(InStr(Text,"'"))?RegExReplace("concat('" RegExReplace(Text,"'","'," Chr(34) "'" Chr(34) ",'") "')","('',|,'')"):"'" Text "'",Text:="contains(" Text ",@" Att ") and @" Att "!='' or @" Att "=''"
 		return Text
 	}CreateElement(Type,ID:="",Text:="",Parent:="",Attributes:="",CSS:=""){
 		local
@@ -272,14 +227,12 @@ Class MsgBoxClass{
 		if(Owner)
 			Gui,% this.Win ":+Owner" Owner
 		Gui,% this.Win ":Show",% (Pos?Pos:"xCenter yCenter w800 h300"),% this.Title
-		Pos:=""
-		this.Get("Window-Settings").Click()
+		Pos:="",this.Get("Window-Settings").Click()
 		while(!this.Response)
 			Sleep,200
 		return this.Response,this.Response:=""
 	}EA(Node){
-		EA:=[]
-		All:=Node.SelectNodes("@*")
+		EA:=[],All:=Node.SelectNodes("@*")
 		while(aa:=All.Item[A_Index-1])
 			EA[aa.NodeName]:=aa.Text
 		return EA
@@ -330,7 +283,7 @@ Class MsgBoxClass{
 		return {Img:Img,Icon:Icon}
 	}MoveSize(){
 		Pos:=this.WinPos()
-		WinMove,% this.ID,,% (A_ThisHotkey~="\b(Left|Right)\b"&&!InStr(A_ThisHotkey,"!")?(Pos.X+(A_ThisHotkey="Left"?-1:1)):""),% (A_ThisHotkey~="\b(Up|Down)\b"&&!InStr(A_ThisHotkey,"!")?Pos.Y+(A_ThisHotkey="Up"?-1:1):""),% (A_ThisHotkey~="!\b(Left|Right)\b"?(Pos.W+this.Border+(this.Edge*3)+(A_ThisHotkey="!Left"?-1:1)):""),% (A_ThisHotkey~="!\b(Up|Down)\b"?Pos.H+this.Border+this.Border-(this.Edge)+(A_ThisHotkey="!Down"?1:-1):"")
+		WinMove,% this.ID,,% (A_ThisHotkey~="\+\b(Left|Right)\b"&&!InStr(A_ThisHotkey,"!")?(Pos.X+(A_ThisHotkey="+Left"?-1:1)):""),% (A_ThisHotkey~="\b(Up|Down)\b"&&!InStr(A_ThisHotkey,"!")?Pos.Y+(A_ThisHotkey="Up"?-1:1):""),% (A_ThisHotkey~="!\b(Left|Right)\b"?(Pos.W+this.Border+(this.Edge*3)+(A_ThisHotkey="!Left"?-1:1)):""),% (A_ThisHotkey~="!\b(Up|Down)\b"?Pos.H+this.Border+this.Border-(this.Edge)+(A_ThisHotkey="!Down"?1:-1):"")
 	}Obj2String(Obj,FullPath:="Blank",BottomBlank:=0){
 		static String,Blank
 		if(FullPath="Blank")
@@ -372,6 +325,7 @@ Class MsgBoxClass{
 		for a,b in Obj
 			Style[a]:=b
 	}SetHotkey(On:=0){
+		local
 		if(!On){
 			for a,b in this.Hotkeys
 				Hotkey,%a%,Off
@@ -418,7 +372,7 @@ Class MsgBoxClass{
 }
 return
 F1::
-t(m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)"))
+ToolTip,% m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
 
 return
 +Escape::
@@ -538,19 +492,6 @@ m(x*){
 	for a,b in {OK:Value?"OK":"",Yes:"YES",No:"NO",Cancel:"CANCEL",Retry:"RETRY"}
 		IfMsgBox,%a%
 			return b
-	return
-}
-t(x*){
-	for a,b in x{
-		if(RegExMatch(b,"time:(\d+(\.\d+)?)$",Found)){
-			SetTimer,CTT,% - Found1*1000
-		}else
-			Msg.=(IsObject(b)?(b.XML?b.XML:Obj2String(b)):b) "`n"
-	}
-	Tooltip,%Msg%
-	return
-	CTT:
-	Tooltip
 	return
 }
 /*
