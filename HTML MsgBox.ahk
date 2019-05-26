@@ -115,10 +115,10 @@ Class MsgBoxClass{
 				Hotkey,%b%,%MS%,On
 			this.Update("HTML Body",{OverFlow:"Auto"},1)
 			WinGetPos,x,y,w,h,% this.ID
-			Gui,% this.Win ":+Resize" ;" +Caption"
+			Gui,% this.Win ":+Resize"
 			WinMove,% this.ID,,% x-(this.Border)+this.Edge,,% w+(this.Border*2)-(this.Edge*2),% h+(this.Border)-(this.Edge)
 			for a,b in {Title:"Window-Title",Class:"Window-Class",EXE:"Window-EXE"}
-				this.Get(b).Value:=this.CurrentNode?EA[a]:this.Window[a] ;,m(this.CurrentNode?EA[a]:this.Window[a],this.Window)
+				this.Get(b).Value:=this.CurrentNode?EA[a]:this.Window[a]
 			this.BackgroundColor:=(OO:=this.Elements)["HTML Body","Background-Color"],this.Color:=OO["HTML Body"].Color,this.Update("HTML Body",{"Background-Color":"Black",Color:"Grey"},1),TabOrder:=[],OrderTab:=[],Tab:=0
 			for a,b in ["Window-Title","Window-Class","Window-EXE","Window-Height","Window-Pos","Window-Global"]
 				TabOrder.Push(b),OrderTab[b]:=A_Index
@@ -143,8 +143,7 @@ Class MsgBoxClass{
 				for a,b in ["Height"]
 					this.CurrentNode.RemoveAttribute(b)
 				this.Get("Window-Height").RemoveAttribute("checked"),OO:=this.Get("Window-Height").Checked:=0
-			}this.Save()
-			this.Set("OverAll",{Visibility:"Visible"}),this.Set("WinForm",{Visibility:"Hidden"}),this.Update("HTML Body",{"Background-Color":this.BackgroundColor,Color:this.Color},1),this.Update("HTML Body",{OverFlow:"Hidden"},1),this.Body.ScrollTop:="0px",this.Body.ScrollLeft:="0px",this.SetHotkey(1)
+			}this.Save(),this.Set("OverAll",{Visibility:"Visible"}),this.Set("WinForm",{Visibility:"Hidden"}),this.Update("HTML Body",{"Background-Color":this.BackgroundColor,Color:this.Color},1),this.Update("HTML Body",{OverFlow:"Hidden"},1),this.Body.ScrollTop:="0px",this.Body.ScrollLeft:="0px",this.SetHotkey(1)
 			return
 		}else if(IsFunc(Function:=Node.ID))
 			%Function%(this)
@@ -278,7 +277,7 @@ Class MsgBoxClass{
 		return {Img:Img,Icon:Icon}
 	}MoveSize(){
 		Pos:=this.WinPos()
-		WinMove,% this.ID,,% (A_ThisHotkey~="\+\b(Left|Right)\b"&&!InStr(A_ThisHotkey,"!")?(Pos.X+(A_ThisHotkey="+Left"?-1:1)):""),% (A_ThisHotkey~="\b(Up|Down)\b"&&!InStr(A_ThisHotkey,"!")?Pos.Y+(A_ThisHotkey="Up"?-1:1):""),% (A_ThisHotkey~="!\b(Left|Right)\b"?(Pos.W+this.Border+(this.Edge*3)+(A_ThisHotkey="!Left"?-1:1)):""),% (A_ThisHotkey~="!\b(Up|Down)\b"?Pos.H+this.Border+this.Border-(this.Edge)+(A_ThisHotkey="!Down"?1:-1):"")
+		WinMove,% this.ID,,% (A_ThisHotkey~="\+\b(Left|Right)\b"&&!InStr(A_ThisHotkey,"!")?(Pos.X+(A_ThisHotkey="+Left"?-1:1)):""),% (A_ThisHotkey~="\+\b(Up|Down)\b"&&!InStr(A_ThisHotkey,"!")?Pos.Y+(A_ThisHotkey="+Up"?-1:1):""),% (A_ThisHotkey~="!\b(Left|Right)\b"?(Pos.W+this.Border+(this.Edge*3)+(A_ThisHotkey="!Left"?-1:1)):""),% (A_ThisHotkey~="!\b(Up|Down)\b"?Pos.H+this.Border+this.Border-(this.Edge)+(A_ThisHotkey="!Down"?1:-1):"")
 	}Obj2String(Obj,FullPath:="Blank",BottomBlank:=0){
 		static String,Blank
 		if(FullPath="Blank")
