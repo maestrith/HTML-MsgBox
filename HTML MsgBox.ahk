@@ -18,8 +18,7 @@ Style.Color:="Red"
 SeeCode:=0
 if()
 	Cool(m)
-return
-t(m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)"))
+MsgBox,% m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
 return
 /*
 	Escape(){
@@ -550,19 +549,6 @@ Pretty(this,Return:=0){
 Show_Elements(this){
 	this.Get("Content").InnerText:=this.Obj2String(this.Elements)
 }
-t(x*){
-	for a,b in x{
-		if(RegExMatch(b,"time:(\d+(\.\d+)?)$",Found)){
-			SetTimer,CTT,% - Found1*1000
-		}else
-			Msg.=(IsObject(b)?(b.XML?b.XML:Obj2String(b)):b) "`n"
-	}
-	Tooltip,%Msg%
-	return
-	CTT:
-	Tooltip
-	return
-}
 m(x*){
 	static List:={BTN:{OC:1,ARI:2,YNC:3,YN:4,RC:5,CTC:6},ico:{X:16,"?":32,"!":48,I:64}},Msg:=[],xx,y,w,h,XPos:=Round(A_ScreenWidth*.7825),Center:=0,TT
 	static Title
@@ -576,6 +562,19 @@ m(x*){
 	for a,b in {OK:Value?"OK":"",Yes:"YES",No:"NO",Cancel:"CANCEL",Retry:"RETRY"}
 		IfMsgBox,%a%
 			return b
+	return
+}
+t(x*){
+	for a,b in x{
+		if(RegExMatch(b,"time:(\d+(\.\d+)?)$",Found)){
+			SetTimer,CTT,% - Found1*1000
+		}else
+			Msg.=(IsObject(b)?(b.XML?b.XML:Obj2String(b)):b) "`n"
+	}
+	Tooltip,%Msg%
+	return
+	CTT:
+	Tooltip
 	return
 }
 /*
