@@ -1,7 +1,7 @@
 #SingleInstance,Force
 global CSS,wb,v:=[]
-m:=New MsgBoxClass(,"My Title")
-m.AddButton(0,{Btn:{Text:"Drop Shadows",ID:"Drop"},CSS:{Background:"Red",Color:"Orange"}},"Round Edges",{Btn:{Text:"Pretty Title"}},{Btn:{Text:"Show Me Something Cool",ID:"Cool"}},{Btn:{Text:"Fancy ScrollBar",ID:"Fancy"}},"Change Buttons","This Windows Code")
+m:=New MsgBoxClass("My Title")
+m.AddButton(0,{Btn:{Text:"Drop Shadows",ID:"Drop"},CSS:{Background:"Red",Color:"Orange"}},"Round Edges",{Btn:{Text:"Pretty Title"}},{Btn:{Text:"Show Me Something Cool",ID:"Cool"}},{Btn:{Text:"Fancy ScrollBar",ID:"Fancy"}},"This Windows Code","Change Buttons")
 if(ShowSettings:=0){
 	m.Get("Save-Position").Click()
 	m.Display("Nice")
@@ -19,18 +19,19 @@ SeeCode:=0
 if()
 	Cool(m)
 MsgBox,% m.Display("<font size='9'><b>H</b>el<font color='red'>l</font><i>o</i><font size='3'><br>Press any of the buttons to see an effect<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Here to show the scrollbar :)")
+ExitApp
 return
-/*
-	Escape(){
-		ExitApp
-	}
-	Close(){
-		ExitApp
-	}
-*/
+Escape(){
+	MsgBox,You Pressed Escape
+	ExitApp
+}
+Close(){
+	MsgBox,You Pressed The X
+	ExitApp
+}
 Class MsgBoxClass{
 	Keep:=[]
-	__New(Win:="MsgBox",Title:="",Owner:=""){
+	__New(Title:="",Owner:="",Win:="MsgBox"){
 		static
 		this.File:=A_LineFile "\..\Settings.XML",this.XML:=ComObjCreate("MSXML2.DOMDocument"),this.XML.SetProperty("SelectionLanguage","XPath"),this.XML.Load(this.File)
 		if(!this.XML.SelectSingleNode("//*"))
